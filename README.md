@@ -86,4 +86,91 @@
 
 ➢ All nodes in the swarm route ingress connections to a running task instance.
 
+## To initialize the docker swarm in Docker host
+
+```
+docker swarm init
+or
+docker swarm init --advertise-addr <public or private ip>
+```
+
+![image](https://github.com/user-attachments/assets/855230bf-f44c-4066-9e2f-babcddea4dac)
+
+**Docker swarm commands**
+
+```
+docker swarm --help
+docker service --help
+//Will list all of the commands and its usage
+```
+
+**To check the docker service in docker swarm**
+
+```
+docker service ls
+```
+
+**To create a new service in docker swarm**
+
+```
+docker service create alpine ping www.google.com
+docker service ls
+```
+
+![image](https://github.com/user-attachments/assets/c625a1a2-64e9-468d-88db-88fbf9384922)
+
+**How many containers are running in my service?**
+
+```
+docker service ls
+docker service ps <service-id>
+```
+
+![image](https://github.com/user-attachments/assets/65802a0d-6e49-4ed3-a81e-782d7ae87746)
+
+**To inspect the container in the service**
+
+```
+docker service inspect <service-id>
+```
+
+![image](https://github.com/user-attachments/assets/4dee9c5b-fe9a-405c-9d6b-921457a12fa8)
+
+**To Scaleup the services using replicas**
+
+```
+docker service update <service-id> --replicas <number-of-replicas>
+docker service ls
+docker service ps <service-name>
+```
+
+![image](https://github.com/user-attachments/assets/ef880cc6-0066-4bff-bdf6-1146e829c7af)
+
+**To remove one container and check the replica**
+
+```
+docker service ps <service-id>
+docker rm -f <container-id>
+docker service ps <service-id>
+docker service ls
+docker service inspect <service-id>
+```
+
+![image](https://github.com/user-attachments/assets/4ee7f2f9-6ae3-44e5-8292-066aabb48670)
+
+New container has been placed as replicas count in docker swarm service (Its maintain the desired state of your service)
+
+![image](https://github.com/user-attachments/assets/043d4f2d-260d-4c5c-a90c-0777aaee1b31)
+
+**To roll back the service**
+
+```
+docker service ls
+docker service rollback <service-id>
+docker service ls
+```
+
+It will back to the previous state from the current state. The containers are scale-down from 5 to 1 as we defined earlier.
+
+![image](https://github.com/user-attachments/assets/ec55054c-e5e4-4e19-97bd-f72df9611ba7)
 
