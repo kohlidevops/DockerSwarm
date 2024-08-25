@@ -174,3 +174,66 @@ It will back to the previous state from the current state. The containers are sc
 
 ![image](https://github.com/user-attachments/assets/ec55054c-e5e4-4e19-97bd-f72df9611ba7)
 
+## To Setup Docker swarm cluster
+
+Assuming my current node as Docker swarm manager and launch 3 more EC2 instances with ubuntu-22 as worker nodes
+
+![image](https://github.com/user-attachments/assets/43ad01c8-4483-4468-8013-4e5fb1b8bba9)
+
+**Install Docker engine on all other nodes**
+
+```
+https://docs.docker.com/engine/install/ubuntu/
+
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod -aG docker $USER
+sudo chmod 777 /var/run/docker.sock
+docker run hello-world
+```
+
+**To print the docker swarm join-token in manager node**
+
+```
+docker swarm join-token manager
+```
+
+![image](https://github.com/user-attachments/assets/aae1575d-97b0-430d-8469-6ad20becd984)
+
+**To list the node in docker swarm manager**
+
+```
+docker node ls
+```
+
+![image](https://github.com/user-attachments/assets/702640b1-1ab1-4998-bcef-de59abd1d039)
+
+To join the docker nodes to manager node using join-token
+
+```
+//To copy the join-token from manager node and execute on all other worker nodes
+docker swarm join --token <token-id> 172.31.28.57:2377
+```
+
+![image](https://github.com/user-attachments/assets/344081a2-412f-4b17-a3df-6df00e9a1389)
+
+To list the nodes in docker swarm manager
+
+```
+docker node ls
+```
+
+![image](https://github.com/user-attachments/assets/e0189aee-3b10-4e6c-b588-806caaec4e7f)
