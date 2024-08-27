@@ -221,19 +221,22 @@ docker node ls
 
 ![image](https://github.com/user-attachments/assets/702640b1-1ab1-4998-bcef-de59abd1d039)
 
-To join the docker nodes to manager node using join-token
+**To join the docker node-01 to manager node using join-token**
 
 ```
-//To copy the join-token from manager node and execute on all other worker nodes
+//To copy the join-token from manager node and execute on docker node-01
 docker swarm join --token <token-id> 172.31.28.57:2377
 ```
 
-![image](https://github.com/user-attachments/assets/344081a2-412f-4b17-a3df-6df00e9a1389)
+![image](https://github.com/user-attachments/assets/3d8c6ac5-6cb1-48d4-b2b1-8101552dad9e)
 
-To list the nodes in docker swarm manager
+**To list the nodes in docker swarm manager**
 
 ```
 docker node ls
 ```
 
-![image](https://github.com/user-attachments/assets/e0189aee-3b10-4e6c-b588-806caaec4e7f)
+![image](https://github.com/user-attachments/assets/827b274d-0980-47ef-9bec-1671fff0a1d0)
+
+As of now, new docker node-01 has been joined as manager and it is Reachable state.
+
