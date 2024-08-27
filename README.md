@@ -205,7 +205,7 @@ sudo chmod 777 /var/run/docker.sock
 docker run hello-world
 ```
 
-**To print the docker swarm join-token in manager node**
+**To print the docker swarm join-token for manager in manager node**
 
 ```
 docker swarm join-token manager
@@ -224,7 +224,7 @@ docker node ls
 **To join the docker node-01 to manager node using join-token**
 
 ```
-//To copy the join-token from manager node and execute on docker node-01
+//To copy the manager join-token from manager node and execute on docker node-01
 docker swarm join --token <token-id> 172.31.28.57:2377
 ```
 
@@ -239,4 +239,128 @@ docker node ls
 ![image](https://github.com/user-attachments/assets/827b274d-0980-47ef-9bec-1671fff0a1d0)
 
 As of now, new docker node-01 has been joined as manager and it is Reachable state.
+
+Docker engine has been installed on docker node-02 and node-03.
+
+**To print the docker swarm join-token for worker in manager node**
+
+```
+docker swarm join-token worker
+```
+
+![image](https://github.com/user-attachments/assets/f8bbf3c3-9921-4c2d-8f46-c9c2940053f5)
+
+**To join the docker node-02 and node-03 to worker node using join-token**
+
+```
+//To copy the worker join-token from manager node and execute on docker node-02 and node-03
+docker swarm join --token SWMTKN-1-1dpm359sovsykgwzaw0pi60q0w55bbwe21wusw66eacsuq0cj9-d8hjxj41iilkk057fp4zy8ygp 172.31.28.57:2377
+```
+
+![image](https://github.com/user-attachments/assets/62f37d24-be1d-49e4-915e-88d2283c7737)
+
+![image](https://github.com/user-attachments/assets/88c56153-3e37-4e7c-91e4-f858f48fa066)
+
+**To list the nodes in docker swarm manager**
+
+```
+docker node ls
+```
+
+![image](https://github.com/user-attachments/assets/6c59e84e-cfec-4484-abf5-a4b0488b1f1b)
+
+As per image, docker-host is Leader, docker-01 is Reachable and docker-02 and docker-03 are worker.
+
+**To promote a docker-02 as manager in docker-03 that is worker node**
+
+If you are promote docker-02 node from any worker nodes, then it wont promote.
+
+As per our environment, docker-02 and docker-03 are worker nodes. Can we try to promote docker-02 as manager in docker-03? Will it work? No It wont work
+
+![image](https://github.com/user-attachments/assets/96a8feb9-ba2f-4301-835f-ed2eb818c2ee)
+
+**To promote a docker-02 as manager in docker-01 that is manager node**
+
+If you are promote docker-02 node from any manager nodes, then it should get promote.
+
+Try to promote the docker-02 as manager in docker-01. It shoudl work as below image.
+
+![image](https://github.com/user-attachments/assets/b964a53e-151f-4909-98ea-e171488ece5e)
+
+```
+docker node promote docker-02
+```
+
+Now docker-02 has been joined to manager node.
+
+![image](https://github.com/user-attachments/assets/1b30bdb7-223e-4d5b-9dcf-d7449631d971)
+
+**To demote the docker-01 in docker-02 node**
+
+```
+docker node demote docker-01
+```
+
+![image](https://github.com/user-attachments/assets/00487a69-3571-46b1-9ea6-30a4c880f0ed)
+
+**To list the docker nodes**
+
+```
+docker node ls
+```
+
+![image](https://github.com/user-attachments/assets/4280e9e3-2d63-4ea4-853a-021475ef23cd)
+
+Now docker-01 has been demoted from manager role.
+
+docker-01 and 03 are worker nodes and docker-01 and host are manager node.
+
+So we dont need to login to host manager node to run anay management commands. Even you can login into any manager nodes and run any management commands.
+
+**To create a service with replicas in docker swarm cluster**
+
+SSH to host manager node
+
+```
+docker service create --replicas 10 alpine ping www.google.com
+```
+
+![image](https://github.com/user-attachments/assets/c4e8dd11-287a-4056-a3e9-2c27403bd05c)
+
+To list the service
+
+```
+docker service ls
+```
+
+**To list the containers are running which is associated with service**
+
+```
+docker service ps <service-name>
+```
+
+![image](https://github.com/user-attachments/assets/44e9609e-5379-4b9e-a3c2-0cd3975dc659)
+
+All the containers are deployed into all the docker swarm nodes.
+
+**To list the containers which are associated to specific node**
+
+SSH to particular node-01 for example
+
+```
+docker container ls
+```
+
+![image](https://github.com/user-attachments/assets/80eceaac-426c-44ac-9dbf-ec54783ad090)
+
+
+
+
+
+
+
+
+
+
+
 
