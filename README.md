@@ -505,8 +505,49 @@ Same port can't be used in morethan a node. For example, If you are accessing th
 
 Port are exposed at ingress netwrok level, not a node level.
 
+## Deploy a Multi Node application in Docker Swarm Cluster
 
+![image](https://github.com/user-attachments/assets/809f4f10-7361-4386-9a9f-793349e7c0f8)
 
+source code ia available here
+
+```
+https://github.com/dockersamples/example-voting-app
+```
+
+Let's play with docker lab again - This time i go with 5 managers and no workers
+
+```
+https://labs.play-with-docker.com/
+```
+
+![image](https://github.com/user-attachments/assets/8b1fc7ea-736e-4e1a-97e0-7d5ad2db9474)
+
+To login any manager node
+
+**To check the nodes**
+
+```
+docker node ls
+```
+
+![image](https://github.com/user-attachments/assets/871c5335-657c-4840-8efc-806ce1804337)
+
+**To create a network for both frontend and backend**
+
+```
+docker network create -d overlay <network-name>
+docker network create -d frontend_ntw
+docker network create -d backend_ntw
+docker network ls
+```
+
+![image](https://github.com/user-attachments/assets/d2c81035-aed5-4ea4-90af-bd2ea0209a4d)
+
+To create a voting app service
+
+```
+docker service create --name vote -p 5000:80 --network frontend_ntw --replicas 4 dockersamples/examplevotingapp_vote
 
 
 
