@@ -405,7 +405,55 @@ Summary
     
     Initialize Swarm before creating overlay networks.
 
+**Demo - Networks in Docker Swarm**
 
+Let's Play with dokcer lab - It's comes with no additional cost.
+
+```
+https://labs.play-with-docker.com/
+```
+
+![image](https://github.com/user-attachments/assets/e2d37c34-9479-450a-80a8-f659d109e14a)
+
+I go with 3 Manager nodes and 2 worker nodes
+
+Connect any manager node
+
+**To create a new network**
+
+```
+docker node ls
+docker network ls
+docker network create -d overlay <network-name>
+docker network create -d overlay my_network
+docker network ls
+```
+
+![image](https://github.com/user-attachments/assets/25b4553d-8d88-408d-8f8d-e98244a72e57)
+
+**To check any services are running in this swarm cluster**
+
+```
+docker service ls
+```
+
+**To create a postgres service in the cluster**
+
+```
+docker service create --name <service-name> --network <network-name> -e POSTGRES_PASSWORD=<password> <postgres-image-name>
+docker service create --name postgres --network my_network -e POSTGRES_PASSWORD=mypass postgres
+```
+
+![image](https://github.com/user-attachments/assets/724a7bd6-40b7-4fa1-81ba-351d1f0ef07a)
+
+**To create a drupal service in the cluster**
+
+```
+docker service create --name <service-name> --network <network-name> -p 8080:80 <image-name>
+docker service create --name drupal --network my_network -p 8080:80 drupal
+```
+
+![image](https://github.com/user-attachments/assets/e1d4c87b-2e8e-4203-a292-1485e3684893)
 
 
 
