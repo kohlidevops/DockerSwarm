@@ -455,6 +455,58 @@ docker service create --name drupal --network my_network -p 8080:80 drupal
 
 ![image](https://github.com/user-attachments/assets/e1d4c87b-2e8e-4203-a292-1485e3684893)
 
+**To inspect a service**
+
+```
+docker service inspect drupal
+docker service inspect postgres
+```
+
+**To check the container for the service**
+
+```
+docker service ps <service-name>
+docker service ps postgres
+```
+
+To access the drupal service in docker labs
+
+As of now, drupal service is running on manager node-2. Navigate to manager node-2 and open the port and place 8080 then access
+
+![image](https://github.com/user-attachments/assets/187572bc-bdb1-40c6-862a-3a5b4f9043a9)
+
+save and continue with standard then setup the database
+
+```
+database name - postgres
+database username - postgres
+database password - mypass
+Host - postgres //service name
+port number - 5432
+```
+
+save and install
+
+```
+Site name - www.mytestsite.com
+Site email address - latchu@gmail.com
+User name - testuser
+Password - ******
+Default time zon - Kolkata
+```
+
+![image](https://github.com/user-attachments/assets/4eef08ea-5e71-4337-8b6d-0db529cd3fd6)
+
+You can access the same service with any other nodes. You can access this drupal service with any other nodes can be manager or worker node.
+
+How it is possible? Becasue Docker swarm iself is doing loadbalancing and it is using Ingress network. That's why we can access the drupal service from any other node.
+
+Same port can't be used in morethan a node. For example, If you are accessing the drupal service in manager node-1 with 8080 and you are going to run wordpress in manager node-2 with port 8080, then it is not possible. Because Docker swar will expose the one port for entire cluster means including all manager and worker nodes.
+
+Port are exposed at ingress netwrok level, not a node level.
+
+
+
 
 
 
