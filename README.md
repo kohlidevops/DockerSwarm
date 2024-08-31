@@ -515,7 +515,7 @@ source code ia available here
 https://github.com/dockersamples/example-voting-app
 ```
 
-Let's play with docker lab again - This time i go with 5 managers and no workers
+_Let's play with docker lab again - This time i go with 5 managers and no workers_
 
 ```
 https://labs.play-with-docker.com/
@@ -544,15 +544,79 @@ docker network ls
 
 ![image](https://github.com/user-attachments/assets/d2c81035-aed5-4ea4-90af-bd2ea0209a4d)
 
-To create a voting app service
+**To create a voting app service**
+
+![image](https://github.com/user-attachments/assets/7ebad2ef-8d78-431d-aae1-3593f55e59c6)
 
 ```
 docker service create --name vote -p 5000:80 --network frontend_ntw --replicas 4 dockersamples/examplevotingapp_vote
+```
 
+![image](https://github.com/user-attachments/assets/54563b40-efac-4e88-bf4e-2e8582031b3b)
 
+![image](https://github.com/user-attachments/assets/3c3b1657-abaf-4dc8-a438-88c97d4ca1c4)
 
+**To create a redis app service**
 
+![image](https://github.com/user-attachments/assets/4f0bc802-6f4b-497a-95d7-053bd34e7895)
 
+```
+docker service create --name redis --network frontend_ntw --replicas 4 redis:alpine
+docker service ls
+```
 
+![image](https://github.com/user-attachments/assets/113327ce-f55e-44f2-b7fc-c2d984e7a436)
 
+**To create a worker service**
+
+![image](https://github.com/user-attachments/assets/7b51b903-2574-469d-97a7-643406ba2996)
+
+```
+docker service create --name worker --network frontend_ntw --network backend_ntw --replicas 4 dockersamples/examplevotingapp_worker
+docker service ls
+```
+
+![image](https://github.com/user-attachments/assets/742e3de7-f15a-4a6d-8c40-50aa3ccd91cb)
+
+To create a db service
+
+![image](https://github.com/user-attachments/assets/8b777025-30da-4021-99d7-9d6bf43cb278)
+
+```
+docker service create --name db --network backend_ntw --mount type=volume,source=db-data,target=/var/lib/postgresql/data -e POSTGRES_PASSWORD=mypass postgres:15-alpine
+docker service ls
+docker service ps db
+```
+
+![image](https://github.com/user-attachments/assets/e74e50e9-96f8-47cc-9c10-04f4822703cd)
+
+**To create a result service**
+
+![image](https://github.com/user-attachments/assets/41dbdffb-c8e2-41c4-93fd-c6771190043c)
+
+```
+docker service create --name result --network backend_ntw -p 5001:80 dockersamples/examplevotingapp_result
+docker service ls
+```
+
+**To list all containers of services**
+
+```
+docker service ps <service-name>
+docker service ps vote redis worker db result
+```
+
+**To check the output**
+
+To click 5000 port in docker lab console to view vote app and 5001 for resulting app.
+
+![image](https://github.com/user-attachments/assets/2a4c5ee4-5f8b-448a-adf1-8065449c5e8b)
+
+_voting app_
+
+![image](https://github.com/user-attachments/assets/3c1e9868-d873-431f-a5a3-bf98efe116df)
+
+_resulting app_
+
+![image](https://github.com/user-attachments/assets/bd7d459f-4f2e-4053-a2ba-d02f391bb1ad)
 
