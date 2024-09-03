@@ -78,8 +78,6 @@
 
 ➢ Task : A task carries a Docker container and the commands to run inside the container.
 
-➢ Once a task is assigned to a node, it cannot move to another node. It can only run on the assigned node or fail.
-
 ➢ Load Balancing : Swarm manager uses ingress load balancing to expose the services you want to make available externally to the swarm.
 
 ➢ External components, such as cloud load balancers, can access the service on the Published Port of any node in the cluster whether or not the node is currently running the task for the service.
