@@ -82,8 +82,6 @@
 
 ➢ External components, such as cloud load balancers, can access the service on the Published Port of any node in the cluster whether or not the node is currently running the task for the service.
 
-➢ All nodes in the swarm route ingress connections to a running task instance.
-
 ## To initialize the docker swarm in Docker host
 
 ```
