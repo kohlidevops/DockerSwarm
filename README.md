@@ -16,7 +16,7 @@
 
 ➢ Swarm is Docker’s native support for orchestrating clusters of Docker engines.
 
-➢ Orchestration : Define nodes. Define services. Set how many nodes you want to run and where, and you’re done.
+➢ Orchestration : Define nodes. Define services. Set how many nodes you want to run.
 
 ➢ At a high level, Swarm takes multiple Docker Engines running on different hosts and lets you use them together.
 
