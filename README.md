@@ -351,55 +351,11 @@ docker container ls
 
 ## Docker Swarm and Networking Basics
 
-**Docker Swarm:** This is a tool for managing a cluster of Docker hosts (servers) and running containers on them.
-
-**Overlay Network:**
-        
-Purpose: It creates a network that spans multiple Docker hosts (nodes) in a Swarm.
-
-Function: Allows containers on different hosts to communicate with each other as if they were on the same local network.
-
-**Key Networks in Docker Swarm**
-
-When you set up Docker Swarm, two special networks are created:
-
-**Ingress Network:**
-
-    What It Is: An overlay network automatically created by Swarm.
-    
-    Function: Handles routing traffic to your services in the Swarm.
-    
-    Usage: If a Swarm service isn't connected to a custom (user-defined) overlay network, it will use the Ingress network.
-
-**Bridge Network (specifically docker_gwbridge):**
-
-    What It Is: A network that connects the Docker nodes to each other.
- 
-    Function: Allows communication between Docker containers on different nodes.
-
-**Rules for User-Defined Overlay Networks**
-
-    Ports to Open:
-    
-        TCP port 2377: For cluster management.
-        TCP and UDP port 7946: For node communication.
-        UDP port 4789: For overlay network traffic.
+![image](https://github.com/user-attachments/assets/73019142-e336-4c8e-bcff-0afee799d4a3)
 
 **Setting Up Overlay Networks**
 
     Prerequisite: Docker Swarm must be initialized (i.e., you need to either create a new Swarm or join an existing one) before you can create an overlay network.
-
-Summary
-
-    Overlay Network allows containers on different Docker hosts to communicate.
-    
-    Ingress Network is used for routing traffic to Swarm services.
-    
-    Bridge Network connects Docker nodes together.
-    
-    Open specific ports for proper network communication.
-    
-    Initialize Swarm before creating overlay networks.
 
 **Demo - Networks in Docker Swarm**
 
